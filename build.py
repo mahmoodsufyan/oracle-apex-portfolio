@@ -37,12 +37,36 @@ def project_rows(locale):
     for slug, case in CASES.items():
         category, title, summary, _ = case["copy"][locale]
         rows.append(f'''
-        <li><a href="{path(slug, locale)}">
+        <li data-category="{'enterprise' if slug == 'golden-cloud' else 'demo'}"><a href="{path(slug, locale)}">
           <span class="project-type">{category}</span>
           <span class="project-name"><strong>{title}</strong><span>{summary}</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>''')
-    return f'<ul class="project-index">{"".join(rows)}</ul>'
+    filters = (("All projects", "Enterprise", "Public demos"), ("كل المشاريع", "المشاريع المؤسسية", "نماذج برمجية"))[locale]
+    buttons = "".join(
+        f'<button type="button" data-filter="{value}" aria-pressed="{str(value == "all").lower()}">{label}</button>'
+        for value, label in zip(("all", "enterprise", "demo"), filters)
+    )
+    return f'<div class="project-browser"><div class="filters" hidden>{buttons}</div><ul class="project-index">{"".join(rows)}</ul></div>'
+
+
+def explorer(locale):
+    modules = (
+        ("accounting", "golden-cloud", ("Accounting", "الحسابات"), ("Vouchers, invoices, and accounting operations.", "السندات والفواتير والعمليات المحاسبية.")),
+        ("workers", "workers", ("Workers", "العمالة"), ("Worker availability, procedures, and arrival tracking.", "مخزون العمالة والإجراءات ومتابعة الوصول.")),
+        ("offices", "offices", ("Agencies", "المكاتب"), ("Local offices and overseas partner agencies.", "المكاتب المحلية والشركات والوكالات الخارجية.")),
+    )
+    buttons, panels = [], []
+    for index, (key, asset, label, description) in enumerate(modules):
+        buttons.append(f'<button type="button" data-module="{key}" aria-controls="module-{key}" aria-pressed="{str(index == 0).lower()}">{label[locale]}</button>')
+        panels.append(f'<section id="module-{key}" class="module-panel"{" hidden" if index else ""}><img src="./assets/{asset}.webp" width="960" height="540" alt="{label[locale]} — Golden Cloud"><h3>{label[locale]}</h3><p>{description[locale]}</p></section>')
+    return f'''<div class="explorer">
+      <div class="explorer-heading"><span class="signal"></span><strong>Golden Cloud</strong><span>{("System explorer", "استكشف المنصة")[locale]}</span></div>
+      <div class="module-controls" aria-label="{("Platform modules", "وحدات المنصة")[locale]}">{"".join(buttons)}</div>
+      <div class="module-content">{"".join(panels)}</div>
+      <p class="contribution">{("My role included database design, core PL/SQL packages, APEX modules, and reporting.", "شمل دوري تصميم قاعدة البيانات وحزم PL/SQL الأساسية ووحدات APEX والتقارير.")[locale]}</p>
+      {link(path("golden-cloud", locale), ("Explore the case study →", "استعرض دراسة الحالة ←")[locale], "text-link")}
+    </div>'''
 
 
 def home(locale):
@@ -66,11 +90,7 @@ def home(locale):
             {link(path("experience", locale), ("View experience", "الخبرة المهنية")[locale], "button")}
           </div>
         </div>
-        <a class="showcase" href="{path("golden-cloud", locale)}">
-          <div class="showcase-top"><span class="signal"></span><span>{("Featured case study", "دراسة الحالة الرئيسية")[locale]}</span></div>
-          <img src="./assets/golden-cloud.webp" width="1920" height="1080" fetchpriority="high" alt="{("Golden Cloud accounting module", "واجهة قسم الحسابات في Golden Cloud")[locale]}">
-          <div class="showcase-bottom"><span><strong>Golden Cloud</strong><small>{("Bilingual recruitment operations platform", "منصة ثنائية اللغة لإدارة عمليات الاستقدام")[locale]}</small></span><span class="arrow" aria-hidden="true"></span></div>
-        </a>
+        {explorer(locale)}
       </section>
       <div class="stack" aria-label="{("Core technologies", "التقنيات الأساسية")[locale]}">
         <span>Oracle APEX</span><span>PL/SQL</span><span>Oracle Database</span><span>ORDS / REST</span><span>APEX Office Print</span>
@@ -211,6 +231,8 @@ def render(page, locale, title, description, body):
   <link rel="alternate" hreflang="ar" href="{BASE + path(page, 1)[2:]}">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./creative.css">
+  <script src="./interactions.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">{("Skip to content", "انتقل إلى المحتوى")[locale]}</a>

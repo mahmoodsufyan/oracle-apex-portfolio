@@ -15,6 +15,8 @@
   <link rel="alternate" hreflang="ar" href="https://mahmoodsufyan.github.io/oracle-apex-portfolio/ar.html">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./creative.css">
+  <script src="./interactions.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -36,33 +38,35 @@
             <a class="button" href="./experience.html">View experience</a>
           </div>
         </div>
-        <a class="showcase" href="./golden-cloud.html">
-          <div class="showcase-top"><span class="signal"></span><span>Featured case study</span></div>
-          <img src="./assets/golden-cloud.webp" width="1920" height="1080" fetchpriority="high" alt="Golden Cloud accounting module">
-          <div class="showcase-bottom"><span><strong>Golden Cloud</strong><small>Bilingual recruitment operations platform</small></span><span class="arrow" aria-hidden="true"></span></div>
-        </a>
+        <div class="explorer">
+      <div class="explorer-heading"><span class="signal"></span><strong>Golden Cloud</strong><span>System explorer</span></div>
+      <div class="module-controls" aria-label="Platform modules"><button type="button" data-module="accounting" aria-controls="module-accounting" aria-pressed="true">Accounting</button><button type="button" data-module="workers" aria-controls="module-workers" aria-pressed="false">Workers</button><button type="button" data-module="offices" aria-controls="module-offices" aria-pressed="false">Agencies</button></div>
+      <div class="module-content"><section id="module-accounting" class="module-panel"><img src="./assets/golden-cloud.webp" width="960" height="540" alt="Accounting — Golden Cloud"><h3>Accounting</h3><p>Vouchers, invoices, and accounting operations.</p></section><section id="module-workers" class="module-panel" hidden><img src="./assets/workers.webp" width="960" height="540" alt="Workers — Golden Cloud"><h3>Workers</h3><p>Worker availability, procedures, and arrival tracking.</p></section><section id="module-offices" class="module-panel" hidden><img src="./assets/offices.webp" width="960" height="540" alt="Agencies — Golden Cloud"><h3>Agencies</h3><p>Local offices and overseas partner agencies.</p></section></div>
+      <p class="contribution">My role included database design, core PL/SQL packages, APEX modules, and reporting.</p>
+      <a class="text-link" href="./golden-cloud.html">Explore the case study →</a>
+    </div>
       </section>
       <div class="stack" aria-label="Core technologies">
         <span>Oracle APEX</span><span>PL/SQL</span><span>Oracle Database</span><span>ORDS / REST</span><span>APEX Office Print</span>
       </div>
       <section class="section">
         <h2>Selected work</h2>
-        <ul class="project-index">
-        <li><a href="./golden-cloud.html">
+        <div class="project-browser"><div class="filters" hidden><button type="button" data-filter="all" aria-pressed="true">All projects</button><button type="button" data-filter="enterprise" aria-pressed="false">Enterprise</button><button type="button" data-filter="demo" aria-pressed="false">Public demos</button></div><ul class="project-index">
+        <li data-category="enterprise"><a href="./golden-cloud.html">
           <span class="project-type">Enterprise project</span>
           <span class="project-name"><strong>Golden Cloud</strong><span>A bilingual platform for recruitment agencies covering clients, workers, partner agencies, HR, and accounting.</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>
-        <li><a href="./financial-ledger.html">
+        <li data-category="demo"><a href="./financial-ledger.html">
           <span class="project-type">Public demo</span>
           <span class="project-name"><strong>Financial Ledger API</strong><span>A double-entry accounting demo with vouchers, a chart of accounts, and trial balance reporting.</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>
-        <li><a href="./loan-management.html">
+        <li data-category="demo"><a href="./loan-management.html">
           <span class="project-type">Public demo</span>
           <span class="project-name"><strong>Loan Management System</strong><span>A microfinance demo for loan amortization, repayment schedules, and credit workflows.</span></span>
           <span class="arrow" aria-hidden="true"></span>
-        </a></li></ul>
+        </a></li></ul></div>
       </section>
   </main>
   <footer class="site-footer"><div class="shell foot">

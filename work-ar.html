@@ -15,6 +15,8 @@
   <link rel="alternate" hreflang="ar" href="https://mahmoodsufyan.github.io/oracle-apex-portfolio/work-ar.html">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./creative.css">
+  <script src="./interactions.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">انتقل إلى المحتوى</a>
@@ -27,22 +29,22 @@
   </header>
   <main id="main" class="shell page page-work" tabindex="-1">
       <header class="page-intro"><p class="eyebrow">معرض الأعمال</p><h1>المشاريع</h1><p class="lede">دراسة حالة لمنصة استقدام، ونموذجان برمجيان لسير العمل المالي، ومثال عملي في Oracle APEX.</p></header>
-      <ul class="project-index">
-        <li><a href="./golden-cloud-ar.html">
+      <div class="project-browser"><div class="filters" hidden><button type="button" data-filter="all" aria-pressed="true">كل المشاريع</button><button type="button" data-filter="enterprise" aria-pressed="false">المشاريع المؤسسية</button><button type="button" data-filter="demo" aria-pressed="false">نماذج برمجية</button></div><ul class="project-index">
+        <li data-category="enterprise"><a href="./golden-cloud-ar.html">
           <span class="project-type">مشروع مؤسسي</span>
           <span class="project-name"><strong>Golden Cloud</strong><span>منصة ثنائية اللغة لمكاتب وشركات الاستقدام تشمل العملاء والعمالة والمكاتب الشريكة والموارد البشرية والحسابات.</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>
-        <li><a href="./financial-ledger-ar.html">
+        <li data-category="demo"><a href="./financial-ledger-ar.html">
           <span class="project-type">نموذج برمجي عام</span>
           <span class="project-name"><strong>Financial Ledger API</strong><span>نموذج محاسبة بالقيد المزدوج يضم السندات ودليل الحسابات وميزان المراجعة.</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>
-        <li><a href="./loan-management-ar.html">
+        <li data-category="demo"><a href="./loan-management-ar.html">
           <span class="project-type">نموذج برمجي عام</span>
           <span class="project-name"><strong>Loan Management System</strong><span>نموذج للتمويل الأصغر يغطّي احتساب أقساط القروض وجداول السداد وسير العمل الائتماني.</span></span>
           <span class="arrow" aria-hidden="true"></span>
-        </a></li></ul>
+        </a></li></ul></div>
       <section class="section">
         <h2>مثال برمجي</h2>
         <article class="panel">

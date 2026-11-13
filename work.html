@@ -15,6 +15,8 @@
   <link rel="alternate" hreflang="ar" href="https://mahmoodsufyan.github.io/oracle-apex-portfolio/work-ar.html">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./creative.css">
+  <script src="./interactions.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -27,22 +29,22 @@
   </header>
   <main id="main" class="shell page page-work" tabindex="-1">
       <header class="page-intro"><p class="eyebrow">Portfolio</p><h1>Projects</h1><p class="lede">A recruitment platform case study, two public demos of financial workflows, and an Oracle APEX code example.</p></header>
-      <ul class="project-index">
-        <li><a href="./golden-cloud.html">
+      <div class="project-browser"><div class="filters" hidden><button type="button" data-filter="all" aria-pressed="true">All projects</button><button type="button" data-filter="enterprise" aria-pressed="false">Enterprise</button><button type="button" data-filter="demo" aria-pressed="false">Public demos</button></div><ul class="project-index">
+        <li data-category="enterprise"><a href="./golden-cloud.html">
           <span class="project-type">Enterprise project</span>
           <span class="project-name"><strong>Golden Cloud</strong><span>A bilingual platform for recruitment agencies covering clients, workers, partner agencies, HR, and accounting.</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>
-        <li><a href="./financial-ledger.html">
+        <li data-category="demo"><a href="./financial-ledger.html">
           <span class="project-type">Public demo</span>
           <span class="project-name"><strong>Financial Ledger API</strong><span>A double-entry accounting demo with vouchers, a chart of accounts, and trial balance reporting.</span></span>
           <span class="arrow" aria-hidden="true"></span>
         </a></li>
-        <li><a href="./loan-management.html">
+        <li data-category="demo"><a href="./loan-management.html">
           <span class="project-type">Public demo</span>
           <span class="project-name"><strong>Loan Management System</strong><span>A microfinance demo for loan amortization, repayment schedules, and credit workflows.</span></span>
           <span class="arrow" aria-hidden="true"></span>
-        </a></li></ul>
+        </a></li></ul></div>
       <section class="section">
         <h2>Code example</h2>
         <article class="panel">
