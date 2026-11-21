@@ -37,15 +37,15 @@ def project_rows(locale):
     for slug, case in CASES.items():
         category, title, summary, _ = case["copy"][locale]
         rows.append(f'''
-        <li data-category="{'enterprise' if slug == 'golden-cloud' else 'demo'}"><a href="{path(slug, locale)}">
+        <li data-category="{case.get('category', 'enterprise' if slug == 'golden-cloud' else 'demo')}"><a href="{path(slug, locale)}">
           <span class="project-type">{category}</span>
           <span class="project-name"><strong>{title}</strong><span>{summary}</span></span>
-          <span class="arrow" aria-hidden="true"></span>
+
         </a></li>''')
-    filters = (("All projects", "Enterprise", "Public demos"), ("كل المشاريع", "المشاريع المؤسسية", "نماذج برمجية"))[locale]
+    filters = (("All projects", "Company work", "Personal / AI", "Public demos"), ("كل المشاريع", "مشاريع الشركات", "شخصية وذكاء اصطناعي", "نماذج برمجية"))[locale]
     buttons = "".join(
         f'<button type="button" data-filter="{value}" aria-pressed="{str(value == "all").lower()}">{label}</button>'
-        for value, label in zip(("all", "enterprise", "demo"), filters)
+        for value, label in zip(("all", "enterprise", "personal", "demo"), filters)
     )
     return f'<div class="project-browser"><div class="filters" hidden>{buttons}</div><ul class="project-index">{"".join(rows)}</ul></div>'
 
@@ -65,15 +65,15 @@ def explorer(locale):
       <div class="module-controls" aria-label="{("Platform modules", "وحدات المنصة")[locale]}">{"".join(buttons)}</div>
       <div class="module-content">{"".join(panels)}</div>
       <p class="contribution">{("My role included database design, core PL/SQL packages, APEX modules, and reporting.", "شمل دوري تصميم قاعدة البيانات وحزم PL/SQL الأساسية ووحدات APEX والتقارير.")[locale]}</p>
-      {link(path("golden-cloud", locale), ("Explore the case study →", "استعرض دراسة الحالة ←")[locale], "text-link")}
+      {link(path("golden-cloud", locale), ("Explore the case study", "استعرض دراسة الحالة")[locale], "text-link")}
     </div>'''
 
 
 def home(locale):
     name = ("Mahmood Sufyan", "محمود سفيان")[locale]
     description = (
-        "I build business applications with Oracle APEX and PL/SQL, from data modeling and business rules to reporting and API integration.",
-        "أطوّر تطبيقات الأعمال باستخدام Oracle APEX وPL/SQL، من تصميم البيانات وقواعد العمل إلى التقارير وتكامل الأنظمة.",
+        "I build business applications with Oracle APEX and PL/SQL, and develop AI applications and Python backends. My work connects data modeling, business rules, APIs, and model integrations.",
+        "أطوّر تطبيقات الأعمال باستخدام Oracle APEX وPL/SQL، وأبني تطبيقات الذكاء الاصطناعي والأنظمة الخلفية ببايثون، من تصميم البيانات وقواعد العمل إلى واجهات API وتكاملات النماذج.",
     )[locale]
     title = (
         'Senior Oracle APEX<br><em>&amp; PL/SQL Developer</em>',
@@ -84,6 +84,7 @@ def home(locale):
         <div class="hero-copy">
           <p class="eyebrow">{name} <span> / </span> {("Sanaa, Yemen", "صنعاء، اليمن")[locale]}</p>
           <h1>{title}</h1>
+          <p class="hero-specialism">AI Application Engineer · Python Backend Development</p>
           <p class="lede">{description}</p>
           <div class="actions">
             {link(path("work", locale), ("Explore projects", "تصفّح المشاريع")[locale], "button primary")}
@@ -93,7 +94,7 @@ def home(locale):
         {explorer(locale)}
       </section>
       <div class="stack" aria-label="{("Core technologies", "التقنيات الأساسية")[locale]}">
-        <span>Oracle APEX</span><span>PL/SQL</span><span>Oracle Database</span><span>ORDS / REST</span><span>APEX Office Print</span>
+        <span>Oracle APEX 18.x–26.1</span><span>PL/SQL</span><span>ORDS / REST</span><span>Python / FastAPI</span><span>AI integrations</span>
       </div>
       <section class="section">
         <h2>{("Selected work", "مشاريع مختارة")[locale]}</h2>
@@ -104,8 +105,8 @@ def home(locale):
 def work(locale):
     title = NAV["work"][locale]
     description = (
-        "A recruitment platform case study, two public demos of financial workflows, and an Oracle APEX code example.",
-        "دراسة حالة لمنصة استقدام، ونموذجان برمجيان لسير العمل المالي، ومثال عملي في Oracle APEX.",
+        "Company platforms, personal AI applications, and public financial demos — with a dedicated case study explaining my role and the implementation scope.",
+        "منصات للشركات وتطبيقات شخصية للذكاء الاصطناعي ونماذج مالية عامة، مع دراسة حالة مستقلة توضح دوري ونطاق التنفيذ في كل مشروع.",
     )[locale]
     example = ("Interactive Grid column visibility", "التحكم في ظهور أعمدة Interactive Grid")[locale]
     return title, description, f'''
@@ -142,6 +143,11 @@ def case_page(slug, locale):
             link("https://www.linkedin.com/feed/update/urn:li:activity:7526848608382492672/", ("Demo on LinkedIn", "العرض على LinkedIn")[locale], "button")
             + link("https://www.youtube.com/@GoldenCloud_1", ("Project YouTube channel", "قناة المشروع على YouTube")[locale], "button")
         )
+    elif slug in ("ordermind", "z-studio", "shabic"):
+        period = (("Company project · End-to-end developer", "مشروع شركة · المطوّر من البداية إلى النهاية") if slug == "shabic" else ("Personal project · Creator & Developer", "مشروع شخصي · صاحب الفكرة والمطوّر"))[locale]
+        steps = case.get("flow", ((), ()))[locale]
+        figure = ('<ol class="workflow" aria-label="' + ("Implementation flow", "تدفق التنفيذ")[locale] + '">' + "".join(f"<li>{escape(step)}</li>" for step in steps) + "</ol>") if steps else ""
+        actions = link(path("contact", locale), ("Discuss my work", "تواصل لمناقشة خبرتي")[locale], "button primary")
     else:
         period = ("Public Python / FastAPI demo", "نموذج برمجي عام بـPython وFastAPI")[locale]
         figure = ""
@@ -181,21 +187,22 @@ def experience(locale):
       <section class="section">
         <h2>{("Education and languages", "التعليم واللغات")[locale]}</h2>
         <div class="panel"><p>{education}</p><p>{languages}</p></div>
+        <div class="actions cv-downloads">{link("./assets/Mahmood_Sufyan_CV_EN.pdf", ("Download CV · English", "تحميل السيرة · الإنجليزية")[locale], "button primary")}{link("./assets/Mahmood_Sufyan_CV_AR.pdf", ("Download CV · Arabic", "تحميل السيرة · العربية")[locale], "button")}</div>
       </section>'''
 
 
 def contact(locale):
     title = NAV["contact"][locale]
     summary = (
-        "For Oracle APEX, PL/SQL, and database engineering roles or project inquiries, reach me by email or LinkedIn.",
-        "للتواصل بشأن فرص العمل أو المشاريع في Oracle APEX وPL/SQL وهندسة قواعد البيانات، راسلني عبر البريد أو LinkedIn.",
+        "For Oracle APEX, PL/SQL, AI application engineering, and Python backend roles or project inquiries, reach me by email or LinkedIn.",
+        "للتواصل بشأن فرص العمل أو المشاريع في Oracle APEX وPL/SQL وتطبيقات الذكاء الاصطناعي والأنظمة الخلفية ببايثون، راسلني عبر البريد أو LinkedIn.",
     )[locale]
     return title, summary, f'''
       {intro(("Mahmood Sufyan · Sanaa, Yemen", "محمود سفيان · صنعاء، اليمن")[locale], title, summary)}
       <ul class="project-index contact-index">
-        <li><a href="mailto:{EMAIL}"><span>{("Email", "البريد الإلكتروني")[locale]}</span><strong dir="ltr">{EMAIL}</strong><span class="arrow" aria-hidden="true"></span></a></li>
-        <li><a href="{LINKEDIN}"><span>LinkedIn</span><strong dir="ltr">mahmood-sufyan</strong><span class="arrow" aria-hidden="true"></span></a></li>
-        <li><a href="{GITHUB}"><span>GitHub</span><strong dir="ltr">mahmoodsufyan</strong><span class="arrow" aria-hidden="true"></span></a></li>
+        <li><a href="mailto:{EMAIL}"><span>{("Email", "البريد الإلكتروني")[locale]}</span><strong dir="ltr">{EMAIL}</strong></a></li>
+        <li><a href="{LINKEDIN}"><span>LinkedIn</span><strong dir="ltr">mahmood-sufyan</strong></a></li>
+        <li><a href="{GITHUB}"><span>GitHub</span><strong dir="ltr">mahmoodsufyan</strong></a></li>
       </ul>'''
 
 
